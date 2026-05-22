@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pynk Bite — Good Food. Good Mood.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #D4537E;
+    --pink-light: #F4C0D1;
+    --pink-pale: #EDD8C8;
+    --pink-dark: #72243E;
+    --cream: #EDE0D0;
+    --cream-mid: #E8D8C4;
+    --cream-light: #F2EBE0;
+    --charcoal: #2C2A28;
+    --warm-gray: #7A7168;
+    --border: rgba(180,140,110,0.25);
+    --white: #F7EFE4;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(237,224,208,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--pink); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--warm-gray);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--pink); }
+  .nav-cta {
+    background: var(--pink);
+    color: white;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--pink-dark); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 70% 50%, var(--pink-light) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-dots {
+    position: absolute; top: 15%; right: 8%;
+    width: 180px; height: 180px;
+    background-image: radial-gradient(circle, rgba(212,83,126,0.18) 1.5px, transparent 1.5px);
+    background-size: 18px 18px;
+    border-radius: 50%;
+  }
+  .hero-content { position: relative; max-width: 580px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--pink-light);
+    color: var(--pink-dark);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--pink); display: block; }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    color: var(--charcoal);
+  }
+  h1 em { font-style: italic; color: var(--pink); }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--warm-gray);
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    background: var(--charcoal);
+    color: white;
+    padding: 0.85rem 2rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--pink); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--charcoal);
+    padding: 0.85rem 2rem;
+    border-radius: 2rem;
+    border: 1.5px solid var(--charcoal);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--pink); color: var(--pink); transform: translateY(-2px); }
+  .hero-info {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem;
+    flex-wrap: wrap;
+  }
+  .hero-stat { }
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    line-height: 1;
+  }
+  .hero-stat-label { font-size: 0.8rem; color: var(--warm-gray); font-weight: 400; margin-top: 0.2rem; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 4rem; }
+  .section-tag {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--pink);
+    margin-bottom: 0.75rem;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: var(--charcoal);
+  }
+  .section-sub { color: var(--warm-gray); font-size: 1rem; font-weight: 300; max-width: 480px; line-height: 1.7; }
+
+  /* INFO STRIP */
+  .info-strip {
+    background: var(--charcoal);
+    padding: 2rem 4rem;
+    display: flex; gap: 3rem; flex-wrap: wrap; align-items: center; justify-content: center;
+  }
+  .info-item { display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.85); font-size: 0.9rem; }
+  .info-icon { color: var(--pink); font-size: 1.1rem; flex-shrink: 0; }
+
+  /* MENUS */
+  .menu-section { background: var(--cream-light); }
+  .menu-tabs {
+    display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 2.5rem 0;
+  }
+  .tab-btn {
+    padding: 0.5rem 1.3rem;
+    border-radius: 2rem;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--warm-gray);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .tab-btn:hover { border-color: var(--pink); color: var(--pink); }
+  .tab-btn.active { background: var(--pink); border-color: var(--pink); color: white; }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .menu-category { background: var(--cream-light); padding: 2rem; }
+  .menu-cat-title {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--pink);
+    margin-bottom: 1.25rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .menu-item {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 0.55rem 0;
+    border-bottom: 1px dashed rgba(0,0,0,0.06);
+    gap: 1rem;
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item-name { font-size: 0.93rem; color: var(--charcoal); font-weight: 400; flex: 1; }
+  .menu-item-price { font-size: 0.88rem; color: var(--pink-dark); font-weight: 500; white-space: nowrap; }
+
+  /* WEEKLY BUFFET */
+  .buffet-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+  .day-card {
+    background: var(--cream-light);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .day-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(212,83,126,0.1); }
+  .day-header {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .day-header.mon { background: #FBEAF0; color: var(--pink-dark); }
+  .day-header.tue { background: #EEF5E8; color: #3B6D11; }
+  .day-header.wed { background: #FFF3E0; color: #854F0B; }
+  .day-header.thu { background: #E8F4F8; color: #185FA5; }
+  .day-header.fri { background: #F3EEF8; color: #534AB7; }
+  .day-items { padding: 1rem 1.25rem; }
+  .day-dish {
+    display: flex; justify-content: space-between;
+    font-size: 0.88rem; padding: 0.4rem 0;
+    border-bottom: 1px dashed rgba(0,0,0,0.06);
+  }
+  .day-dish:last-child { border-bottom: none; }
+  .day-dish-name { color: var(--charcoal); }
+  .day-dish-price { color: var(--pink-dark); font-weight: 500; font-size: 0.82rem; }
+  .buffet-note {
+    text-align: center; margin-top: 2rem; padding: 1.2rem 2rem;
+    background: var(--pink-light); border-radius: 2rem;
+    font-size: 0.88rem; color: var(--pink-dark); font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  /* COMBOS */
+  .combos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-top: 2.5rem; }
+  .combo-card {
+    background: var(--cream-light);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .combo-card:hover { border-color: var(--pink); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,83,126,0.08); }
+  .combo-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.78rem; font-weight: 700;
+    color: var(--pink); letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+  .combo-type {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--warm-gray);
+    margin-bottom: 0.75rem;
+  }
+  .combo-items { list-style: none; margin-bottom: 0.75rem; }
+  .combo-items li { font-size: 0.88rem; color: var(--charcoal); padding: 0.2rem 0; }
+  .combo-items li::before { content: '·  '; color: var(--pink); }
+  .combo-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--charcoal);
+  }
+  .combo-price span { font-size: 0.75rem; font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--warm-gray); }
+
+  /* CONTACT / VISIT */
+  .contact-section { background: var(--charcoal); color: white; }
+  .contact-section .section-tag { color: #F4C0D1; }
+  .contact-section h2 { color: white; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-top: 3rem; }
+  @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 3rem; } }
+  .contact-detail { display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-row { display: flex; align-items: flex-start; gap: 1rem; }
+  .contact-row-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(212,83,126,0.2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    color: var(--pink);
+  }
+  .contact-row-text { }
+  .contact-row-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 0.25rem; }
+  .contact-row-value { font-size: 0.95rem; color: rgba(255,255,255,0.9); font-weight: 300; line-height: 1.5; }
+  .contact-row-value a { color: var(--pink); text-decoration: none; font-weight: 400; transition: opacity 0.2s; }
+  .contact-row-value a:hover { opacity: 0.8; }
+  .call-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--pink);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+    width: fit-content;
+  }
+  .call-btn:hover { background: #B83A60; transform: translateY(-2px); }
+  .call-icon { font-size: 1.1rem; }
+  .hours-grid { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem; }
+  .hours-row { display: flex; justify-content: space-between; font-size: 0.9rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .hours-day { color: rgba(255,255,255,0.6); font-weight: 300; }
+  .hours-time { color: rgba(255,255,255,0.9); font-weight: 400; }
+  .hours-row.closed .hours-time { color: rgba(255,255,255,0.3); }
+
+  /* FOOTER */
+  footer {
+    background: #1C1A18;
+    padding: 2.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: white;
+  }
+  .footer-logo span { color: var(--pink); }
+  .footer-tagline { font-size: 0.82rem; color: rgba(255,255,255,0.35); margin-top: 0.2rem; }
+  .footer-right { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .info-strip { padding: 1.5rem; gap: 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-content > * { animation: fadeUp 0.7s ease both; }
+  .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero-content > *:nth-child(4) { animation-delay: 0.4s; }
+  .hero-content > *:nth-child(5) { animation-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Pynk <span>Bite</span></a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#buffet">Buffet</a></li>
+    <li><a href="#combos">Combos</a></li>
+    <li><a href="#visit">Visit Us</a></li>
+  </ul>
+  <a href="tel:+254748969004" class="nav-cta">📞 Call to Order</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Nairobi CBD · Nkrumah Lane</div>
+    <h1>Good Food.<br><em>Good Mood.</em></h1>
+    <p class="hero-sub">Made fresh, just for you. Dine in, takeaway, or delivery — Pynk Bite brings heart to every plate in the heart of Nairobi.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">View Menu</a>
+      <a href="tel:+254748969004" class="btn-outline">Order Now</a>
+    </div>
+    <div class="hero-info">
+      <div class="hero-stat">
+        <div class="hero-stat-num">Mon–Sat</div>
+        <div class="hero-stat-label">Open weekly</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">7:30–18:00</div>
+        <div class="hero-stat-label">Daily hours</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">Delivery</div>
+        <div class="hero-stat-label">Available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-item"><span class="info-icon">📍</span> Moi Avenue, Nkrumah Lane, Nairobi CBD</div>
+  <div class="info-item"><span class="info-icon">🕐</span> Mon – Sat &nbsp;·&nbsp; 7:30am – 6pm</div>
+  <div class="info-item"><span class="info-icon">🛵</span> Delivery Available</div>
+  <div class="info-item"><span class="info-icon">🏠</span> Catering for All Events</div>
+</div>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="section-tag">À La Carte</div>
+  <h2>Our Full Menu</h2>
+  <p class="section-sub">Fresh ingredients, bold flavours — from quick bites to kitchen specials.</p>
+
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="showTab('alacarte')">À La Carte</button>
+    <button class="tab-btn" onclick="showTab('snacks')">Snacks & Drinks</button>
+  </div>
+
+  <div class="menu-panel active" id="alacarte">
+    <div class="menu-grid">
+      <div class="menu-category">
+        <div class="menu-cat-title">Quick Bites</div>
+        <div class="menu-item"><span class="menu-item-name">Chips</span><span class="menu-item-price">KSh 150</span></div>
+        <div class="menu-item"><span class="menu-item-name">Masala Chips</span><span class="menu-item-price">KSh 250</span></div>
+        <div class="menu-item"><span class="menu-item-name">Rolex</span><span class="menu-item-price">KSh 200</span></div>
+        <div class="menu-item"><span class="menu-item-name">Chicken Shawarma</span><span class="menu-item-price">KSh 350</span></div>
+        <div class="menu-item"><span class="menu-item-name">Beef Shawarma</span><span class="menu-item-price">KSh 350</span></div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-cat-title">Burgers</div>
+        <div class="menu-item"><span class="menu-item-name">Classic Burger</span><span class="menu-item-price">KSh 450</span></div>
+        <div class="menu-item"><span class="menu-item-name">BBQ Bacon Burger</span><span class="menu-item-price">KSh 550</span></div>
+        <div class="menu-cat-title" style="margin-top:1.5rem">Wings</div>
+        <div class="menu-item"><span class="menu-item-name">Sweet Chilli Wings</span><span class="menu-item-price">KSh 400</span></div>
+        <div class="menu-item"><span class="menu-item-name">Sweet & Sour Wings</span><span class="menu-item-price">KSh 400</span></div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-cat-title">Kitchen Specials</div>
+        <div class="menu-item"><span class="menu-item-name">Beef Stir Fry with Vegetable Rice</span><span class="menu-item-price">KSh 450</span></div>
+        <div class="menu-item"><span class="menu-item-name">Chicken Stir Fry with Vegetable Rice</span><span class="menu-item-price">KSh 450</span></div>
+        <div class="menu-item"><span class="menu-item-name">Beef in Oyster Sauce with Veg Rice</span><span class="menu-item-price">KSh 400</span></div>
+        <div class="menu-item"><span class="menu-item-name">Black Pepper Beef with Veg Rice</span><span class="menu-item-price">KSh 450</span></div>
+        <div class="menu-item"><span class="menu-item-name">Southern Fried Chicken with Chips & Coleslaw</span><span class="menu-item-price">KSh 450</span></div>
+        <div class="menu-item"><span class="menu-item-name">Butter Chicken with Veg Rice or Chapati</span><span class="menu-item-price">KSh 450</span></div>
+        <div class="menu-item"><span class="menu-item-name">Chicken Curry with Veg Rice or Chapati</span><span class="menu-item-price">KSh 450</span></div>
+        <div class="menu-item"><span class="menu-item-name">Beef Curry with Veg Rice or Chapati</span><span class="menu-item-price">KSh 450</span></div>
+        <div class="menu-item"><span class="menu-item-name">Whole Fish with Ugali & Spinach</span><span class="menu-item-price">KSh 650</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-panel" id="snacks">
+    <div class="menu-grid">
+      <div class="menu-category">
+        <div class="menu-cat-title">Snacks & Bites</div>
+        <div class="menu-item"><span class="menu-item-name">Meat Pie</span><span class="menu-item-price">KSh 70</span></div>
+        <div class="menu-item"><span class="menu-item-name">Samosa</span><span class="menu-item-price">KSh 50</span></div>
+        <div class="menu-item"><span class="menu-item-name">Sausage</span><span class="menu-item-price">KSh 60</span></div>
+        <div class="menu-item"><span class="menu-item-name">Chapati</span><span class="menu-item-price">KSh 50</span></div>
+        <div class="menu-item"><span class="menu-item-name">Banana Bread</span><span class="menu-item-price">KSh 50</span></div>
+        <div class="menu-item"><span class="menu-item-name">Vanilla Cake</span><span class="menu-item-price">KSh 50</span></div>
+        <div class="menu-item"><span class="menu-item-name">Sausage Rolls</span><span class="menu-item-price">KSh 100</span></div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-cat-title">Hot Drinks</div>
+        <div class="menu-item"><span class="menu-item-name">Mixed Tea</span><span class="menu-item-price">KSh 70</span></div>
+        <div class="menu-item"><span class="menu-item-name">Dawa</span><span class="menu-item-price">KSh 200</span></div>
+        <div class="menu-item"><span class="menu-item-name">Hot Chocolate</span><span class="menu-item-price">KSh 100</span></div>
+        <div class="menu-item"><span class="menu-item-name">House Coffee</span><span class="menu-item-price">KSh 150</span></div>
+        <div class="menu-item"><span class="menu-item-name">Cappuccino</span><span class="menu-item-price">KSh 150</span></div>
+        <div class="menu-cat-title" style="margin-top:1.5rem">Cold Drinks</div>
+        <div class="menu-item"><span class="menu-item-name">Soda 500ml</span><span class="menu-item-price">KSh 90</span></div>
+        <div class="menu-item"><span class="menu-item-name">Soda 300ml</span><span class="menu-item-price">KSh 60</span></div>
+        <div class="menu-item"><span class="menu-item-name">Minute Maid</span><span class="menu-item-price">KSh 80</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEKLY BUFFET -->
+<section id="buffet" style="background: var(--cream-mid);">
+  <div class="section-tag">Weekly Rotation</div>
+  <h2>Buffet Menu</h2>
+  <p class="section-sub">Every day brings something special — served with rice, ugali, or 2 chapatis.</p>
+  <div class="buffet-grid">
+    <div class="day-card">
+      <div class="day-header mon">Monday</div>
+      <div class="day-items">
+        <div class="day-dish"><span class="day-dish-name">Beef Stew</span><span class="day-dish-price">KSh 400</span></div>
+        <div class="day-dish"><span class="day-dish-name">Lemon Garlic Chicken with Pan Sauce</span><span class="day-dish-price">KSh 400</span></div>
+        <div class="day-dish"><span class="day-dish-name">Coconut Beans</span><span class="day-dish-price">KSh 250</span></div>
+        <div class="day-dish"><span class="day-dish-name">Matumbo</span><span class="day-dish-price">KSh 300</span></div>
+      </div>
+    </div>
+    <div class="day-card">
+      <div class="day-header tue">Tuesday</div>
+      <div class="day-items">
+        <div class="day-dish"><span class="day-dish-name">Beef in Oyster Sauce</span><span class="day-dish-price">KSh 400</span></div>
+        <div class="day-dish"><span class="day-dish-name">Schezwan Chicken</span><span class="day-dish-price">KSh 400</span></div>
+      </div>
+    </div>
+    <div class="day-card">
+      <div class="day-header wed">Wednesday</div>
+      <div class="day-items">
+        <div class="day-dish"><span class="day-dish-name">Beef Curry</span><span class="day-dish-price">KSh 400</span></div>
+        <div class="day-dish"><span class="day-dish-name">Chicken Curry</span><span class="day-dish-price">KSh 400</span></div>
+      </div>
+    </div>
+    <div class="day-card">
+      <div class="day-header thu">Thursday</div>
+      <div class="day-items">
+        <div class="day-dish"><span class="day-dish-name">Pilau</span><span class="day-dish-price">KSh 400</span></div>
+        <div class="day-dish"><span class="day-dish-name">Swahili Coconut Chicken</span><span class="day-dish-price">KSh 400</span></div>
+        <div class="day-dish"><span class="day-dish-name">Mbuzi Wet Fry</span><span class="day-dish-price">KSh 400</span></div>
+        <div class="day-dish"><span class="day-dish-name">Githeri</span><span class="day-dish-price">KSh 300</span></div>
+      </div>
+    </div>
+    <div class="day-card">
+      <div class="day-header fri">Friday</div>
+      <div class="day-items">
+        <div class="day-dish"><span class="day-dish-name">Matumbo</span><span class="day-dish-price">KSh 300</span></div>
+        <div class="day-dish"><span class="day-dish-name">Beef Stew</span><span class="day-dish-price">KSh 400</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="buffet-note">✦ All buffet dishes served with Rice, Ugali, or 2 Chapatis ✦</div>
+</section>
+
+<!-- COMBOS -->
+<section id="combos" style="background: var(--cream-light);">
+  <div class="section-tag">Value Meals</div>
+  <h2>Combo Menu</h2>
+  <p class="section-sub">Mix and match — every combo is made with care and served with love.</p>
+  <div class="combos-grid">
+    <!-- Lunch Combos -->
+    <div class="combo-card">
+      <div class="combo-number">Combo 1</div>
+      <div class="combo-type">Lunch</div>
+      <ul class="combo-items"><li>Rice</li><li>Beef Stew</li><li>Vegetables of the Day</li></ul>
+      <div class="combo-price">350 <span>KSh</span></div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-number">Combo 2</div>
+      <div class="combo-type">Lunch</div>
+      <ul class="combo-items"><li>Rice</li><li>Chicken Stew</li><li>Vegetables of the Day</li></ul>
+      <div class="combo-price">350 <span>KSh</span></div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-number">Combo 3</div>
+      <div class="combo-type">Lunch</div>
+      <ul class="combo-items"><li>Rice</li><li>Mbuzi Stew</li><li>Vegetables of the Day</li></ul>
+      <div class="combo-price">350 <span>KSh</span></div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-number">Combo 4</div>
+      <div class="combo-type">Lunch</div>
+      <ul class="combo-items"><li>Rice</li><li>Ndengu</li><li>Vegetables of the Day</li></ul>
+      <div class="combo-price">350 <span>KSh</span></div>
+    </div>
+    <!-- Chapati Combos -->
+    <div class="combo-card">
+      <div class="combo-number">Combo 5</div>
+      <div class="combo-type">Chapati</div>
+      <ul class="combo-items"><li>Chapati</li><li>Beef Stew</li><li>Vegetables of the Day</li></ul>
+      <div class="combo-price">350 <span>KSh</span></div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-number">Combo 6</div>
+      <div class="combo-type">Chapati</div>
+      <ul class="combo-items"><li>Chapati</li><li>Chicken Stew</li><li>Vegetables of the Day</li></ul>
+      <div class="combo-price">350 <span>KSh</span></div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-number">Combo 7</div>
+      <div class="combo-type">Chapati</div>
+      <ul class="combo-items"><li>Chapati</li><li>Ndengu</li></ul>
+      <div class="combo-price">300 <span>KSh</span></div>
+    </div>
+    <!-- Ugali Combos -->
+    <div class="combo-card">
+      <div class="combo-number">Combo 8</div>
+      <div class="combo-type">Ugali</div>
+      <ul class="combo-items"><li>Ugali</li><li>Wet Fry Mbuzi</li><li>Vegetables of the Day</li></ul>
+      <div class="combo-price">350 <span>KSh</span></div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-number">Combo 9</div>
+      <div class="combo-type">Ugali</div>
+      <ul class="combo-items"><li>Ugali</li><li>Beef Stew</li><li>Vegetables of the Day</li></ul>
+      <div class="combo-price">350 <span>KSh</span></div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-number">Combo 10</div>
+      <div class="combo-type">Ugali</div>
+      <ul class="combo-items"><li>Githeri</li></ul>
+      <div class="combo-price">250 <span>KSh</span></div>
+    </div>
+    <!-- Signature Combos -->
+    <div class="combo-card" style="border-color: rgba(212,83,126,0.35);">
+      <div class="combo-number">Combo 11</div>
+      <div class="combo-type">Signature</div>
+      <ul class="combo-items"><li>Vegetable Rice</li><li>Butter Chicken</li></ul>
+      <div class="combo-price">400 <span>KSh</span></div>
+    </div>
+    <div class="combo-card" style="border-color: rgba(212,83,126,0.35);">
+      <div class="combo-number">Combo 12</div>
+      <div class="combo-type">Signature</div>
+      <ul class="combo-items"><li>Vegetable Rice</li><li>Chicken Curry</li></ul>
+      <div class="combo-price">400 <span>KSh</span></div>
+    </div>
+    <div class="combo-card" style="border-color: rgba(212,83,126,0.35);">
+      <div class="combo-number">Combo 13</div>
+      <div class="combo-type">Signature</div>
+      <ul class="combo-items"><li>Rosemary Chicken</li><li>Chips</li></ul>
+      <div class="combo-price">450 <span>KSh</span></div>
+    </div>
+    <div class="combo-card" style="border-color: rgba(212,83,126,0.35);">
+      <div class="combo-number">Combo 14</div>
+      <div class="combo-type">Signature</div>
+      <ul class="combo-items"><li>Beef in Oyster Sauce</li></ul>
+      <div class="combo-price">400 <span>KSh</span></div>
+    </div>
+    <div class="combo-card" style="border-color: rgba(212,83,126,0.35);">
+      <div class="combo-number">Combo 15</div>
+      <div class="combo-type">Signature</div>
+      <ul class="combo-items"><li>Stir Fry Beef or Chicken</li><li>Vegetable Rice</li></ul>
+      <div class="combo-price">400 <span>KSh</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT / CONTACT -->
+<section class="contact-section" id="visit">
+  <div class="section-tag">Find Us</div>
+  <h2>Visit Pynk Bite</h2>
+  <div class="contact-grid">
+    <div class="contact-detail">
+      <div class="contact-row">
+        <div class="contact-row-icon">📍</div>
+        <div class="contact-row-text">
+          <div class="contact-row-label">Location</div>
+          <div class="contact-row-value">Moi Avenue, Nkrumah Lane<br>Nairobi CBD, Kenya</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-row-icon">📞</div>
+        <div class="contact-row-text">
+          <div class="contact-row-label">Phone</div>
+          <div class="contact-row-value">
+            <a href="tel:+254748969004">+254 748 969 004</a><br>
+            <a href="tel:+254118807104">+254 118 807 104</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-row-icon">📱</div>
+        <div class="contact-row-text">
+          <div class="contact-row-label">Instagram</div>
+          <div class="contact-row-value"><a href="https://instagram.com/pynk.bite" target="_blank">@pynk.bite</a></div>
+        </div>
+      </div>
+      <a href="tel:+254748969004" class="call-btn">
+        <span class="call-icon">📞</span> Call to Order
+      </a>
+    </div>
+    <div>
+      <div class="contact-row-label" style="color: rgba(255,255,255,0.45); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1rem;">Opening Hours</div>
+      <div class="hours-grid">
+        <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time">7:30am – 6:00pm</span></div>
+        <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">7:30am – 6:00pm</span></div>
+        <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time">7:30am – 6:00pm</span></div>
+        <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time">7:30am – 6:00pm</span></div>
+        <div class="hours-row"><span class="hours-day">Friday</span><span class="hours-time">7:30am – 6:00pm</span></div>
+        <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">7:30am – 6:00pm</span></div>
+        <div class="hours-row closed"><span class="hours-day">Sunday</span><span class="hours-time">Closed</span></div>
+      </div>
+      <div style="margin-top:2rem; padding:1.25rem; background: rgba(212,83,126,0.1); border-radius:12px; border: 1px solid rgba(212,83,126,0.2);">
+        <div style="font-size:0.78rem; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.45); margin-bottom:0.5rem;">Catering & Events</div>
+        <div style="color:rgba(255,255,255,0.8); font-size:0.92rem; font-weight:300; line-height:1.6;">We cater for all events — corporate lunches, private parties, and more. Get in touch to discuss your needs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Pynk <span>Bite</span></div>
+    <div class="footer-tagline">Good Food. Good Mood. Made fresh, just for you.</div>
+  </div>
+  <div class="footer-right">© 2025 Pynk Bite · Nairobi, Kenya</div>
+</footer>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
